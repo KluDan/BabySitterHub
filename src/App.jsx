@@ -8,6 +8,10 @@ function App() {
         <Link to="/BabySitterHub/">Home</Link>
         {" | "}
         <Link to="/BabySitterHub/catalog">Catalog</Link>
+        {" | "}
+        <Link to="/BabySitterHub/login">Login</Link>
+        {" | "}
+        <Link to="/BabySitterHub/register">Register</Link>
       </nav>
       <Outlet />
     </>
