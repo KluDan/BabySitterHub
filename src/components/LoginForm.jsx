@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { Form } from "./Form";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../store/slices/userSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
