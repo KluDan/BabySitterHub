@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
-import { Form } from "./Form";
+import { Form } from "./Form/Form";
 import { setUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,14 @@ const SignUpForm = () => {
         console.error("Error:", error);
       });
   };
-  return <Form title="Register" handleClick={handleRegister} />;
+  return (
+    <Form
+      title="Registration"
+      handleClick={handleRegister}
+      text="Thank you for your interest in our platform! In order to register, we need some information. Please provide us with the following information."
+      isRegistration={true}
+    />
+  );
 };
 
 export default SignUpForm;

@@ -2,11 +2,11 @@ import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
-import { Form } from "./Form";
+import { Form } from "./Form/Form";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../store/slices/userSlice";
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const handleLogin = (email, password) => {
@@ -27,7 +27,14 @@ const LoginForm = () => {
         console.error("Error:", error);
       });
   };
-  return <Form title="Login" handleClick={handleLogin} />;
+  return (
+    <Form
+      onClose={onClose}
+      title="Log In"
+      handleClick={handleLogin}
+      text="Welcome back! Please enter your credentials to access your account and continue your babysitter search."
+    />
+  );
 };
 
 export default LoginForm;
