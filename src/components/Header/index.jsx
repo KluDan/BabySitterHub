@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import useAuth from "../../utils/hooks/useAuth";
+import Modal from "../Modal";
 import AuthUserBlock from "./AuthUserBlock";
 
 import {
@@ -11,12 +12,19 @@ import {
   StyledNavigation,
 } from "./Header.styled";
 
-const Header = () => {
+const Header = ({ isFetching }) => {
   const location = useLocation();
   const { pathname } = location;
   const { isAuth } = useAuth();
 
   const shouldApplyStyles = pathname === "/BabySitterHub";
+  if (isFetching) {
+    return (
+      <Modal>
+        <p>loading...</p>
+      </Modal>
+    );
+  }
   return (
     <HeaderStyled $main={shouldApplyStyles}>
       <HeaderNavBlock $main={shouldApplyStyles}>
@@ -28,7 +36,7 @@ const Header = () => {
             </StyledLink>
             <StyledLink to="/BabySitterHub/nannies">Nannies</StyledLink>
             {isAuth && (
-              <StyledLink to="/BabySitterHub/favourites">Favourites</StyledLink>
+              <StyledLink to="/BabySitterHub/favorites">Favorites</StyledLink>
             )}
           </StyledNavigation>
           <AuthUserBlock />

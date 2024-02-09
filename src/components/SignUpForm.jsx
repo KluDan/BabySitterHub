@@ -3,17 +3,13 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { Form } from "./Form/Form";
 import { setUser } from "../store/slices/userSlice";
-import { useNavigate } from "react-router-dom";
-import { useError } from "../utils/helpers/ErrorContext";
+
 import { auth } from "../firebase";
 
 const SignUpForm = ({ onClose }) => {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
 
   const handleRegister = (email, password, name) => {
-    const { handleError } = useError();
-
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         updateProfile(auth.currentUser, { displayName: name }).catch(
@@ -29,7 +25,6 @@ const SignUpForm = ({ onClose }) => {
             token: user.accessToken,
           })
         );
-        navigate("/BabySitterHub");
         onClose();
       })
       .catch((error) => {

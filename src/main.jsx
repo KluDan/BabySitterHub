@@ -1,10 +1,6 @@
 import ReactDOM from "react-dom/client";
 import React, { Suspense } from "react";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
@@ -13,10 +9,11 @@ import "./firebase";
 import { GlobalStyle } from "./GlobalStyles";
 import { theme } from "./theme";
 
-import Home from "./pages/HomePage/HomePage";
-
 import ErrorPage from "./pages/ErrorPage";
 import Layout from "./components/Layout";
+import HomePage from "./pages/HomePage/HomePage";
+import Favorites from "./pages/Favorites";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +21,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/BabySitterHub", element: <Home /> },
+      { path: "/BabySitterHub", element: <HomePage /> },
       {
         path: "/BabySitterHub/nannies",
 
@@ -34,13 +31,13 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/BabySitterHub/favourites",
-        lazy: async () => {
-          let { Favourites } = await import("./pages/Favourites");
-          return { Component: Favourites };
-        },
+        path: "/BabySitterHub/favorites",
+        element: (
+          <ProtectedRoute>
+            <Favorites />
+          </ProtectedRoute>
+        ),
       },
-      /* { path: "*", element: <Navigate to="/BabySitterHub" replace /> }, */
     ],
   },
 ]);
