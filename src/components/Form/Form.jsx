@@ -6,7 +6,6 @@ import {
   StyledText,
   StyledTitle,
   StyledInputBlock,
-  CloseBtn,
 } from "./Form.styled";
 
 export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
@@ -25,7 +24,7 @@ export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
   });
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
-      <CloseBtn onClick={onClose} />
+
       <StyledTitle>{title}</StyledTitle>
       <StyledText>{text}</StyledText>
       <StyledInputBlock>
