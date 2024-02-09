@@ -1,39 +1,46 @@
-import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
+import React, { Suspense } from "react";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
 import { Provider } from "react-redux";
-
-import Catalog from "./pages/Catalog.jsx";
-import Home from "./pages/HomePage/Home.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import App from "./App.jsx";
-import "./firebase";
-import { store } from "./store/index";
-import { GlobalStyle } from "./GlobalStyles.js";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./theme.js";
-import Favourites from "./pages/Favourites.jsx";
+
+import { store } from "./store";
+import "./firebase";
+import { GlobalStyle } from "./GlobalStyles";
+import { theme } from "./theme";
+
+import Home from "./pages/HomePage/HomePage";
+
+import ErrorPage from "./pages/ErrorPage";
+import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
   {
     path: "/BabySitterHub",
-    element: <App />,
+    element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "/BabySitterHub", element: <Home /> },
       {
         path: "/BabySitterHub/nannies",
-        lazy: () => import("./pages/Catalog"),
+
+        lazy: async () => {
+          let { Catalog } = await import("./pages/Catalog");
+          return { Component: Catalog };
+        },
       },
       {
         path: "/BabySitterHub/favourites",
-        lazy: () => import("./pages/Favourites"),
+        lazy: async () => {
+          let { Favourites } = await import("./pages/Favourites");
+          return { Component: Favourites };
+        },
       },
-      { path: "*", element: <Navigate to="/BabySitterHub" replace /> },
+      /* { path: "*", element: <Navigate to="/BabySitterHub" replace /> }, */
     ],
   },
 ]);

@@ -1,11 +1,14 @@
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
+
 import FormInput from "../FormInput";
+
 import {
   StyledForm,
   StyledFormBtn,
   StyledText,
   StyledTitle,
   StyledInputBlock,
+  CloseBtn,
 } from "./Form.styled";
 
 export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
@@ -22,9 +25,10 @@ export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
         formik.values.name
       ),
   });
+
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
-
+      <CloseBtn onClick={onClose} />
       <StyledTitle>{title}</StyledTitle>
       <StyledText>{text}</StyledText>
       <StyledInputBlock>

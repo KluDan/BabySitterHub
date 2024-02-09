@@ -15,6 +15,7 @@ const FormInput = ({ name, type, handleChange, value }) => {
     e.preventDefault();
     setIsPasswordVisible((prev) => !prev);
   };
+
   return (
     <InputBlock>
       <StyledInput

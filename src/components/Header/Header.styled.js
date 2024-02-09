@@ -1,24 +1,30 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const HeaderStyled = styled.header`
-  position: absolute;
+  position: ${({ $main }) => ($main ? "absolute" : "static")};
   top: 0;
-  left: 96px;
+  left: 128px;
   z-index: 1000;
+  width: ${({ $main }) => ($main ? "1184px" : "100%")};
+  background-color: ${({ $main, theme }) =>
+    $main ? "transparent" : theme.colors.primaryGreenColor};
+`;
+
+export const HeaderNavBlock = styled.div`
   display: flex;
-  width: 1184px;
   justify-content: space-between;
   align-items: center;
   padding-block: 20px;
+  padding-inline: ${({ $main }) => ($main ? "0" : "128px")};
 `;
 
-export const HeaderLogo = styled.a`
+export const HeaderLogo = styled(Link)`
   font-weight: 500;
   font-size: 24px;
   line-height: 117%;
   letter-spacing: -0.02em;
-  color: #fbfbfb;
+  color: ${(p) => p.theme.colors.headerText};
 `;
 export const HeaderNavAuthBlock = styled.div`
   display: flex;

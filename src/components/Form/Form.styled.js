@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import CloseIcon from "../../assets/icons/close.svg?react";
 
 export const StyledForm = styled.form`
   position: relative;
@@ -41,4 +42,16 @@ export const StyledFormBtn = styled.button`
   &:hover {
     box-shadow: inset 0 0 10px #103931, 0 0 0 1px #103931;
   }
+`;
+
+export const CloseBtn = styled(CloseIcon)`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  &:hover {
+    box-shadow: inset 0 0 10px #103931, 0 0 0 1px #103931;
+  }
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 `;

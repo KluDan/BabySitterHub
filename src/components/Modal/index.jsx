@@ -18,11 +18,11 @@ const ModalContent = styled.div`
   border-radius: 10px;
 `;
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ onClose, children }) => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Escape") {
-        onClose();
+        handleClose();
       }
     };
 
@@ -32,6 +32,7 @@ const Modal = ({ children, onClose }) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [onClose]);
+
   return (
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>

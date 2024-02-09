@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
 
-export const StyledHeroMain = styled.main`
+export const StyledHeroMain = styled.section`
+  position: relative;
   width: 100%;
-  max-width: 1376px;
+  max-width: 1370px;
+  margin: 30px;
   border-radius: 30px;
   height: calc(100lvh - 64px);
   display: flex;

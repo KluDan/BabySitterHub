@@ -1,32 +1,44 @@
-import React from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
 import { Form } from "./Form/Form";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../store/slices/userSlice";
+import { auth } from "../firebase";
 
 const LoginForm = ({ onClose }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
   const handleLogin = (email, password) => {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        console.log(user);
+        const displayName = user.displayName;
         dispatch(
           setUser({
+            name: displayName,
             email: user.email,
             id: user.uid,
             token: user.accessToken,
           })
         );
-        navigate("/BabySitterHub/");
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            name: displayName,
+            email: user.email,
+            id: user.uid,
+            token: user.accessToken,
+          })
+        );
+        navigate("/BabySitterHub");
+        onClose();
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
   return (
     <Form
       onClose={onClose}

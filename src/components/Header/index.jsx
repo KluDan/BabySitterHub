@@ -1,27 +1,39 @@
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import useAuth from "../../utils/hooks/useAuth";
 import AuthUserBlock from "./AuthUserBlock";
+
 import {
   HeaderLogo,
+  HeaderNavBlock,
   HeaderNavAuthBlock,
   HeaderStyled,
   StyledLink,
   StyledNavigation,
 } from "./Header.styled";
-const Header = ({ onClick }) => {
-  return (
-    <HeaderStyled>
-      <HeaderLogo>Nanny.Services</HeaderLogo>
-      <HeaderNavAuthBlock>
-        <StyledNavigation>
-          <StyledLink to="/BabySitterHub/">Home</StyledLink>
-          <StyledLink to="/BabySitterHub/catalog">Nannies</StyledLink>
 
-          {/* <Link to="/BabySitterHub/login">Login</Link>
-          {" | "}
-          <Link to="/BabySitterHub/register">Register</Link> */}
-        </StyledNavigation>
-        <AuthUserBlock />
-      </HeaderNavAuthBlock>
+const Header = () => {
+  const location = useLocation();
+  const { pathname } = location;
+  const { isAuth } = useAuth();
+
+  const shouldApplyStyles = pathname === "/BabySitterHub";
+  return (
+    <HeaderStyled $main={shouldApplyStyles}>
+      <HeaderNavBlock $main={shouldApplyStyles}>
+        <HeaderLogo to="/BabySitterHub">Nanny.Services</HeaderLogo>
+        <HeaderNavAuthBlock>
+          <StyledNavigation>
+            <StyledLink to="/BabySitterHub" end>
+              Home
+            </StyledLink>
+            <StyledLink to="/BabySitterHub/nannies">Nannies</StyledLink>
+            {isAuth && (
+              <StyledLink to="/BabySitterHub/favourites">Favourites</StyledLink>
+            )}
+          </StyledNavigation>
+          <AuthUserBlock />
+        </HeaderNavAuthBlock>
+      </HeaderNavBlock>
     </HeaderStyled>
   );
 };

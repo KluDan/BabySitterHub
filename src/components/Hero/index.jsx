@@ -1,6 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../Header";
+import CardExperiencedNannies from "../CardExperiencedNannies";
+
 import MainPageImg from "../../assets/images/MainPageImg.jpg";
 import GetStartedArrow from "../../assets/icons/arrow.svg?react";
 
@@ -12,9 +11,8 @@ import {
   HeroBtn,
   StyledHeroMain,
 } from "./Hero.styled";
-import CardExperiencedNannies from "../CardExperiencedNannies";
 
-const Hero = ({ children }) => {
+const Hero = () => {
   return (
     <StyledHeroMain>
       <InfoBlock>
