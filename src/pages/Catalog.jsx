@@ -1,6 +1,3 @@
-import React from "react";
-import CardNanny from "../components/CardNanny";
-
 import { styled } from "styled-components";
 import NannyList from "../components/ListOfNannyCards";
 
@@ -18,7 +15,6 @@ export const Catalog = () => {
   return (
     <CatalogContainer>
       <Filter>Filter</Filter>
-      <CardNanny />
       <NannyList />
     </CatalogContainer>
   );

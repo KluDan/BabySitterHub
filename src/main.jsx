@@ -12,19 +12,18 @@ import { theme } from "./theme";
 import ErrorPage from "./pages/ErrorPage";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage/HomePage";
-import Favorites from "./pages/Favorites";
+import { Favorites } from "./pages/Favorites";
+
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/BabySitterHub",
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       { path: "/BabySitterHub", element: <HomePage /> },
       {
         path: "/BabySitterHub/nannies",
-
         lazy: async () => {
           let { Catalog } = await import("./pages/Catalog");
           return { Component: Catalog };
@@ -32,11 +31,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/BabySitterHub/favorites",
-        element: (
-          <ProtectedRoute>
-            <Favorites />
-          </ProtectedRoute>
-        ),
+        lazy: async () => {
+          /* const { Favorites } = await import("./pages/Favorites"); */
+          return {
+            Component: () => (
+              <ProtectedRoute>
+                <Favorites />
+              </ProtectedRoute>
+            ),
+          };
+        },
       },
     ],
   },

@@ -13,10 +13,11 @@ import {
   ReadMoreBtn,
   Region,
   ReviewList,
+  StyledHeartIcon,
   TextInfo,
   Title,
 } from "./CardNanny.styled";
-import HeartIcon from "../../assets/icons/heart-icon.svg?react";
+
 import StarIcon from "../../assets/icons/star.svg?react";
 import MapPinIcon from "../../assets/icons/map-pin.svg?react";
 import DetailsItem from "../CardDetailsItem";
@@ -26,18 +27,15 @@ import Button from "../Button";
 import { useModal } from "../../utils/helpers/ModalContext";
 import PopUpAppointment from "../PopUpAppointment";
 import Modal from "../Modal";
+import useAuth from "../../utils/hooks/useAuth";
+import { calculateAge } from "../../utils/helpers/calculateAge";
+import { saveUserFavorites } from "../../firebase";
 const CardNanny = ({ nanny }) => {
+  const { currentUser, isAuth } = useAuth();
   const [showReviews, setShowReviews] = useState(false);
   const { modalConfig, openModal, closeModal } = useModal();
   const [selectedNanny, setSelectedNanny] = useState(null);
-
-  useEffect(() => {
-    setSelectedNanny(nanny);
-  }, [nanny]);
-
-  if (!nanny) {
-    return null;
-  }
+  const [clickedHeart, setClickedHeart] = useState(null);
 
   const {
     about,
@@ -55,24 +53,50 @@ const CardNanny = ({ nanny }) => {
     reviews,
   } = nanny;
 
-  const birthDate = new Date(birthday);
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
+  if (!nanny) {
+    return null;
   }
+
+  useEffect(() => {
+    setSelectedNanny(nanny);
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isNannyInFavorites = favorites.some(
+      (favNanny) => favNanny.id === nanny.id
+    );
+    setClickedHeart(isNannyInFavorites);
+  }, [nanny]);
 
   const formattedCharacters = characters
     .map((character) => character.charAt(0).toUpperCase() + character.slice(1))
     .join(", ");
 
   const handleOpenModal = () => {
-    openModal("appointment", selectedNanny); // Передаем данные о няне в модальное окно
+    openModal("appointment", selectedNanny);
+  };
+
+  const addToFavorites = () => {
+    if (isAuth) {
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      const isNannyInFavorites = favorites.some(
+        (favNanny) => favNanny.id === selectedNanny.id
+      );
+      console.log(currentUser);
+      saveUserFavorites(currentUser.id, favorites);
+
+      if (isNannyInFavorites) {
+        const updatedFavorites = favorites.filter(
+          (favNanny) => favNanny.id !== selectedNanny.id
+        );
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+        setClickedHeart(false);
+      } else {
+        favorites.push(selectedNanny);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        setClickedHeart(true);
+      }
+    } else {
+      openModal("login");
+    }
   };
 
   return (
@@ -102,12 +126,15 @@ const CardNanny = ({ nanny }) => {
                   <span> {price_per_hour}$</span>
                 </Price>
               </TextInfo>
-              <HeartIcon />
+              <StyledHeartIcon
+                onClick={addToFavorites}
+                $clicked={clickedHeart}
+              />
             </InfoOverview>
           </InfoBasic>
 
           <DetailsList>
-            <DetailsItem label="Age:" value={age} />
+            <DetailsItem label="Age:" value={calculateAge(birthday)} />
             <DetailsItem label="Experience:" value={experience} />
             <DetailsItem label="Kids age:" value={kids_age} />
             <DetailsItem label="Characters:" value={formattedCharacters} />

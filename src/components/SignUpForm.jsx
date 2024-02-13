@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
-import { Form } from "./Form/Form";
+import { Form } from "./Form";
 import { setUser } from "../store/slices/userSlice";
 
 import { auth } from "../firebase";

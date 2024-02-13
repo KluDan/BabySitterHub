@@ -15,7 +15,6 @@ const NannyList = () => {
   const [nannies, setNannies] = useState([]);
   const [lastVisibleIndex, setLastVisibleIndex] = useState(null);
   const [allNanniesLoaded, setAllNanniesLoaded] = useState(false);
-  const [selectedNanny, setSelectedNanny] = useState(null);
 
   useEffect(() => {
     const dataRef = ref(db, "/nannies");
@@ -27,7 +26,7 @@ const NannyList = () => {
       if (data !== null) {
         const nanniesArray = Object.values(data);
         setNannies(nanniesArray);
-        console.log("nannies", nannies);
+
         const lastIndex = parseInt(
           Object.keys(data)[Object.keys(data).length - 1]
         );
@@ -54,11 +53,11 @@ const NannyList = () => {
 
     const unsubscribe = onValue(nextDataRef, (snapshot) => {
       const data = snapshot.val();
-      console.log("Received more data:", data);
+
       if (data !== null) {
         const nanniesArray = Object.values(data);
         setNannies((prevNannies) => [...prevNannies, ...nanniesArray]);
-        console.log("Twonannies", nannies);
+
         const lastIndex = parseInt(
           Object.keys(data)[Object.keys(data).length - 1]
         );

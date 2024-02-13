@@ -11,8 +11,8 @@ import {
 import PopUpInput from "./PopUpInput";
 
 const PopUpAppointment = ({ onClose, nanny }) => {
-  console.log("Nanny", nanny);
   const { name, avatar_url } = nanny;
+
   return (
     <PopUp>
       <CloseBtn onClick={onClose} />

@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import HeartIcon from "../../assets/icons/heart-icon.svg?react";
 
 export const ArticleNanny = styled.article`
   width: 100%;
@@ -138,4 +139,9 @@ export const ReviewList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 25px;
+`;
+
+export const StyledHeartIcon = styled(HeartIcon)`
+  fill: ${({ $clicked }) => ($clicked ? "red" : "none")};
+  stroke: ${({ $clicked }) => ($clicked ? "red" : "#11101c")};
 `;
