@@ -23,7 +23,7 @@ const Modal = ({ onClose, children }) => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Escape") {
-        handleClose();
+        onClose();
       }
     };
 

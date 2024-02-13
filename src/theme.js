@@ -6,15 +6,15 @@ export const theme = Object.freeze({
     mainBackground: "#F3F3F3",
     primaryGreenColor: "#103931",
     secondaryGreenColor: "#38cd3e",
-    accentColor: "#103931",
     headerText: "#fbfbfb",
-    titleText: "##8a8a89",
+    titleText: "#8a8a89",
     primaryBodyText: "#11101c",
     secondaryBodyText: "rgba(17, 16, 28, 0.5)",
     buttonBorder: "rgba(251, 251, 251, 0.4)",
-    userBorder: "rgba(240, 63, 59, 0.2)",
+    photoBorder: "rgba(240, 63, 59, 0.2)",
     primaryWhite: "#FFFFFF",
     error: "#E74A3B",
+    additionalGreenColor: "rgba(16, 57, 49, 0.2)",
   },
 
   fontWeights: {

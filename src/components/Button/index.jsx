@@ -1,8 +1,8 @@
 import { StyledButton } from "./Button.styled";
 
-const Button = ({ title, border, onClick }) => {
+const Button = ({ title, border, onClick, padding }) => {
   return (
-    <StyledButton $border={border} onClick={onClick}>
+    <StyledButton $border={border} onClick={onClick} $padding={padding}>
       {title}
     </StyledButton>
   );

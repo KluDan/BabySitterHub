@@ -8,14 +8,15 @@ export const ModalProvider = ({ children }) => {
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
     formType: null,
+    selectedNanny: null,
   });
 
-  const openModal = (formType) => {
-    setModalConfig({ isOpen: true, formType });
+  const openModal = (formType, selectedNanny) => {
+    setModalConfig({ isOpen: true, formType, selectedNanny });
   };
 
   const closeModal = () => {
-    setModalConfig({ isOpen: false, formType: null });
+    setModalConfig({ isOpen: false, formType: null, selectedNanny: null });
   };
 
   return (

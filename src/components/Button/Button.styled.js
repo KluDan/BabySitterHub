@@ -5,7 +5,7 @@ export const StyledButton = styled.button`
   line-height: 125%;
   letter-spacing: -0.01em;
   color: #fbfbfb;
-  padding: 14px 40px;
+  padding: ${({ $padding }) => ($padding ? $padding : "14px 40px")};
   border-radius: 30px;
   border: ${({ $border }) =>
     $border ? "1px solid rgba(251, 251, 251, 0.4)" : "none"};

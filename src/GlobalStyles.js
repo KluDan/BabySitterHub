@@ -33,6 +33,8 @@ a {
 button {
     cursor: pointer;
     outline: none;
+     padding: 0;
+    margin: 0;
 }
 
 

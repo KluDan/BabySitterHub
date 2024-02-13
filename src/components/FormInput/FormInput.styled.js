@@ -13,10 +13,20 @@ export const StyledInput = styled.input`
   font-size: 16px;
   line-height: 125%;
   color: #11101c;
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   &:focus,
   &:hover {
     outline: #103931 solid 1px;
   }
+  grid-column: ${({ $isGridStretchRow }) =>
+    $isGridStretchRow ? "span 2" : "span 1"};
 `;
 
 export const StyledHideShowButton = styled.div`
@@ -29,15 +39,4 @@ export const StyledHideShowButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  /* ${(props) =>
-    props.error &&
-    css`
-      right: 30px;
-
-      ${(props) =>
-        props.$isVisible &&
-        css`
-          right: 10px;
-        `}
-    `} */
 `;
