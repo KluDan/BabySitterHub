@@ -3,16 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
-    currentUser: null,
+    currentUser: {
+      favorites: [],
+    },
   },
   reducers: {
     setUser(users, action) {
-      users.currentUser = action.payload;
+      users.currentUser = { ...action.payload };
+    },
+    setFavorites(users, action) {
+      return {
+        ...users,
+        currentUser: {
+          ...users.currentUser,
+          favorites: action.payload,
+        },
+      };
     },
   },
 });
 
-export const { setUser } = usersSlice.actions;
+export const { setUser, setFavorites } = usersSlice.actions;
 
 export const selectUsers = (state) => state.users;
 
