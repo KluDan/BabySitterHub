@@ -1,21 +1,25 @@
+import { useState } from "react";
 import { styled } from "styled-components";
+import CustomDropdown from "../components/DropDownMenu";
+
 import NannyList from "../components/ListOfNannyCards";
 
 const CatalogContainer = styled.section`
   max-width: 1184px;
   margin: 64px auto;
 `;
-const Filter = styled.div`
-  width: 60px;
-  height: 60px;
-  background-color: red;
-  margin-bottom: 32px;
-`;
+
 export const Catalog = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelectOption = (option) => {
+    setSelectedOption(option);
+    console.log("Selected option:", option);
+  };
   return (
     <CatalogContainer>
-      <Filter>Filter</Filter>
-      <NannyList />
+      <CustomDropdown onSelect={handleSelectOption} />
+      <NannyList sortBy={selectedOption} />
     </CatalogContainer>
   );
 };

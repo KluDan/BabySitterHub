@@ -27,15 +27,23 @@ import Button from "../Button";
 import { useModal } from "../../utils/helpers/ModalContext";
 import PopUpAppointment from "../PopUpAppointment";
 import Modal from "../Modal";
-import useAuth from "../../utils/hooks/useAuth";
+
 import { calculateAge } from "../../utils/helpers/calculateAge";
-import { saveUserFavorites } from "../../firebase";
+import {
+  getUserFavorites,
+  removeFavoriteById,
+  saveUserFavorites,
+} from "../../firebase";
+import useAuth from "../../utils/hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/slices/userSlice";
+
 const CardNanny = ({ nanny }) => {
   const { currentUser, isAuth } = useAuth();
   const [showReviews, setShowReviews] = useState(false);
   const { modalConfig, openModal, closeModal } = useModal();
-  const [selectedNanny, setSelectedNanny] = useState(null);
   const [clickedHeart, setClickedHeart] = useState(null);
+  const dispatch = useDispatch();
 
   const {
     about,
@@ -53,46 +61,63 @@ const CardNanny = ({ nanny }) => {
     reviews,
   } = nanny;
 
-  if (!nanny) {
-    return null;
-  }
-
   useEffect(() => {
-    setSelectedNanny(nanny);
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const isNannyInFavorites = favorites.some(
-      (favNanny) => favNanny.id === nanny.id
-    );
-    setClickedHeart(isNannyInFavorites);
-  }, [nanny]);
+    const fetchData = async () => {
+      if (currentUser && nanny) {
+        try {
+          const favorites = await getUserFavorites(currentUser.id);
+          const isNannyInFavorites = favorites.some(
+            (favNanny) => favNanny.id === nanny.id
+          );
+          setClickedHeart(isNannyInFavorites);
+        } catch (error) {
+          console.error("Error fetching favorites", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [currentUser, nanny]);
 
   const formattedCharacters = characters
     .map((character) => character.charAt(0).toUpperCase() + character.slice(1))
     .join(", ");
 
   const handleOpenModal = () => {
-    openModal("appointment", selectedNanny);
+    openModal("appointment", nanny);
   };
 
-  const addToFavorites = () => {
+  const addToFavorites = async () => {
     if (isAuth) {
-      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      const isNannyInFavorites = favorites.some(
-        (favNanny) => favNanny.id === selectedNanny.id
-      );
-      console.log(currentUser);
-      saveUserFavorites(currentUser.id, favorites);
-
-      if (isNannyInFavorites) {
-        const updatedFavorites = favorites.filter(
-          (favNanny) => favNanny.id !== selectedNanny.id
+      try {
+        const favorites = await getUserFavorites(currentUser.id);
+        const isNannyInFavorites = favorites.some(
+          (favNanny) => favNanny.id === nanny.id
         );
-        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-        setClickedHeart(false);
-      } else {
-        favorites.push(selectedNanny);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        setClickedHeart(true);
+
+        if (isNannyInFavorites) {
+          setClickedHeart(false);
+
+          if (nanny.id) {
+            console.log("removed");
+            await removeFavoriteById(currentUser.id, nanny.id);
+            const updatedFavorites = currentUser?.favorites.filter(
+              (favorite) => favorite.id !== nanny.id
+            );
+            const updatedUser = { ...currentUser, favorites: updatedFavorites };
+            dispatch(setUser(updatedUser));
+          } else {
+            console.error("Error: Nanny id is null or undefined");
+          }
+        } else {
+          const updatedFavorites = [...favorites, nanny];
+          await saveUserFavorites(currentUser.id, updatedFavorites);
+          const updatedUser = { ...currentUser, favorites: updatedFavorites };
+          dispatch(setUser(updatedUser));
+          setClickedHeart(true);
+        }
+      } catch (error) {
+        console.error("Error adding to favorites:", error);
       }
     } else {
       openModal("login");

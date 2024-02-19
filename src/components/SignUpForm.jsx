@@ -25,6 +25,7 @@ const SignUpForm = ({ onClose }) => {
             token: user.accessToken,
           })
         );
+        localStorage.setItem("userId", user.uid);
         onClose();
       })
       .catch((error) => {

@@ -9,9 +9,10 @@ import {
   orderByKey,
 } from "firebase/database";
 import CardNanny from "../CardNanny";
-import { StyledList } from "./ListOfNannyCards.styled";
+import { StyledList, ListSection } from "./ListOfNannyCards.styled";
+import Button from "../Button";
 
-const NannyList = () => {
+const NannyList = ({ sortBy }) => {
   const [nannies, setNannies] = useState([]);
   const [lastVisibleIndex, setLastVisibleIndex] = useState(null);
   const [allNanniesLoaded, setAllNanniesLoaded] = useState(false);
@@ -71,15 +72,43 @@ const NannyList = () => {
     return unsubscribe;
   };
 
+  const sortedNannies = [...nannies].sort((a, b) => {
+    switch (sortBy) {
+      case "a-z":
+        return a.name.localeCompare(b.name);
+      case "z-a":
+        return b.name.localeCompare(a.name);
+      case "asc":
+        return a.price_per_hour - b.price_per_hour;
+      case "desc":
+        return b.price_per_hour - a.price_per_hour;
+      case "popular":
+        return b.rating - a.rating;
+      case "not-popular":
+        return a.rating - b.rating;
+      case "show-all":
+      default:
+        return 0;
+    }
+  });
+  console.log("sortedNannies", sortedNannies);
+
   return (
-    <div>
+    <ListSection>
       <StyledList>
-        {nannies.map((nanny) => (
+        {sortedNannies.map((nanny) => (
           <CardNanny key={nanny.id} nanny={nanny} />
         ))}
       </StyledList>
-      {!allNanniesLoaded && <button onClick={loadMoreData}>Load More</button>}
-    </div>
+      {!allNanniesLoaded && (
+        <Button
+          title="Load More"
+          border={false}
+          padding="14px 40px"
+          onClick={loadMoreData}
+        />
+      )}
+    </ListSection>
   );
 };
 

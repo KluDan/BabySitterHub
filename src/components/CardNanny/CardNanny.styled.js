@@ -123,6 +123,7 @@ export const ButtonsBlock = styled.div`
   gap: 40px;
   align-items: center;
 `;
+
 export const ReadMoreBtn = styled.button`
   text-align: start;
   border: none;
@@ -130,9 +131,28 @@ export const ReadMoreBtn = styled.button`
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  text-decoration: underline;
   text-decoration-skip-ink: none;
   color: ${(p) => p.theme.colors.primaryBodyText};
+  transition: ${(p) => p.theme.transition.customTrans};
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) scaleX(1);
+    width: 100%;
+    height: 1px;
+    background-color: ${(p) => p.theme.colors.primaryBodyText};
+    transition: transform 0.3s ease;
+    transform-origin: center;
+  }
+  &:hover::after {
+    transform: translateX(-50%) scaleX(0);
+  }
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const ReviewList = styled.ul`
@@ -142,6 +162,15 @@ export const ReviewList = styled.ul`
 `;
 
 export const StyledHeartIcon = styled(HeartIcon)`
-  fill: ${({ $clicked }) => ($clicked ? "red" : "none")};
-  stroke: ${({ $clicked }) => ($clicked ? "red" : "#11101c")};
+  fill: ${({ $clicked }) =>
+    $clicked ? (p) => p.theme.colors.primaryGreenColor : "none"};
+  stroke: ${({ $clicked }) =>
+    $clicked ? (p) => p.theme.colors.primaryGreenColor : "#11101c"};
+
+  cursor: pointer;
+  transition: ${(p) => p.theme.transition.customTrans};
+  &:hover {
+    stroke: ${(p) => p.theme.colors.primaryGreenColor};
+    transform: scale(1.1);
+  }
 `;

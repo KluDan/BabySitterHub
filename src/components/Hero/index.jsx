@@ -11,6 +11,7 @@ import {
   HeroBtn,
   StyledHeroMain,
 } from "./Hero.styled";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -18,7 +19,7 @@ const Hero = () => {
       <InfoBlock>
         <HeroTitle>Make Life Easier for the Family:</HeroTitle>
         <HeroText>Find Babysitters Online for All Occasions</HeroText>
-        <HeroBtn>
+        <HeroBtn as={Link} to="/BabySitterHub/nannies">
           Get started
           <GetStartedArrow />
         </HeroBtn>

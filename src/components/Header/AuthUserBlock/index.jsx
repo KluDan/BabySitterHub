@@ -1,5 +1,4 @@
 import { useModal } from "../../../utils/helpers/ModalContext";
-import useAuth from "../../../utils/hooks/useAuth";
 
 import Button from "../../Button";
 import LoginForm from "../../LoginForm";
@@ -17,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { setUser } from "../../../store/slices/userSlice";
+import useAuth from "../../../utils/hooks/useAuth";
 
 const AuthUserBlock = () => {
   const { name, isAuth } = useAuth();

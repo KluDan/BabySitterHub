@@ -47,6 +47,11 @@ export const HeroBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: ${(p) => p.theme.transition.customTrans};
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  }
 `;
 export const MediaBlock = styled.div`
   width: 699px;

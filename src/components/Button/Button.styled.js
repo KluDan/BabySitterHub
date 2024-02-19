@@ -10,7 +10,7 @@ export const StyledButton = styled.button`
   border: ${({ $border }) =>
     $border ? "1px solid rgba(251, 251, 251, 0.4)" : "none"};
   background-color: ${({ $border }) => ($border ? "transparent" : "#103931")};
-  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: ${(p) => p.theme.transition.customTrans};
   &:hover {
     background-color: rgba(16, 57, 49, 0.2);
     color: black;

@@ -1,6 +1,11 @@
 import ReactDOM from "react-dom/client";
 import React, { Suspense } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
@@ -14,7 +19,7 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import { Favorites } from "./pages/Favorites";
 
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { Catalog } from "./pages/Catalog";
 
 const router = createBrowserRouter([
   {
@@ -24,23 +29,11 @@ const router = createBrowserRouter([
       { path: "/BabySitterHub", element: <HomePage /> },
       {
         path: "/BabySitterHub/nannies",
-        lazy: async () => {
-          let { Catalog } = await import("./pages/Catalog");
-          return { Component: Catalog };
-        },
+        element: <Catalog />,
       },
       {
         path: "/BabySitterHub/favorites",
-        lazy: async () => {
-          /* const { Favorites } = await import("./pages/Favorites"); */
-          return {
-            Component: () => (
-              <ProtectedRoute>
-                <Favorites />
-              </ProtectedRoute>
-            ),
-          };
-        },
+        element: <Favorites />,
       },
     ],
   },
