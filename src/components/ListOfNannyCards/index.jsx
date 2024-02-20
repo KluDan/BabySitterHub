@@ -1,76 +1,13 @@
-import { useState, useEffect } from "react";
-import { db } from "../../firebase";
-import {
-  ref,
-  onValue,
-  query,
-  startAfter,
-  limitToFirst,
-  orderByKey,
-} from "firebase/database";
 import CardNanny from "../CardNanny";
 import { StyledList, ListSection } from "./ListOfNannyCards.styled";
 import Button from "../Button";
+import { useEffect, useState } from "react";
+import ScrollToTopButton from "../ScrollToTopButton";
 
-const NannyList = ({ sortBy }) => {
-  const [nannies, setNannies] = useState([]);
-  const [lastVisibleIndex, setLastVisibleIndex] = useState(null);
-  const [allNanniesLoaded, setAllNanniesLoaded] = useState(false);
+const NannyList = ({ sortBy, nannies }) => {
+  const [displayedNannies, setDisplayedNannies] = useState([]);
 
-  useEffect(() => {
-    const dataRef = ref(db, "/nannies");
-
-    const initialQuery = query(dataRef, orderByKey(), limitToFirst(3));
-
-    const unsubscribe = onValue(initialQuery, (snapshot) => {
-      const data = snapshot.val();
-      if (data !== null) {
-        const nanniesArray = Object.values(data);
-        setNannies(nanniesArray);
-
-        const lastIndex = parseInt(
-          Object.keys(data)[Object.keys(data).length - 1]
-        );
-        setLastVisibleIndex(lastIndex);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  const loadMoreData = () => {
-    if (!lastVisibleIndex) return;
-
-    const dataRef = ref(db, "/nannies");
-
-    const nextDataRef = query(
-      dataRef,
-      orderByKey(),
-      startAfter(lastVisibleIndex.toString()),
-      limitToFirst(3)
-    );
-
-    const unsubscribe = onValue(nextDataRef, (snapshot) => {
-      const data = snapshot.val();
-
-      if (data !== null) {
-        const nanniesArray = Object.values(data);
-        setNannies((prevNannies) => [...prevNannies, ...nanniesArray]);
-
-        const lastIndex = parseInt(
-          Object.keys(data)[Object.keys(data).length - 1]
-        );
-        setLastVisibleIndex(lastIndex);
-        if (Object.keys(data).length < 3) {
-          setAllNanniesLoaded(true);
-        }
-      }
-    });
-
-    return unsubscribe;
-  };
+  const startIndex = 0;
 
   const sortedNannies = [...nannies].sort((a, b) => {
     switch (sortBy) {
@@ -91,23 +28,42 @@ const NannyList = ({ sortBy }) => {
         return 0;
     }
   });
-  console.log("sortedNannies", sortedNannies);
+
+  useEffect(() => {
+    setDisplayedNannies(sortedNannies.slice(startIndex, startIndex + 3));
+  }, [sortBy, nannies, startIndex]);
+
+  const handleLoadMore = () => {
+    const newDisplayedNannies = [
+      ...displayedNannies,
+      ...sortedNannies.slice(
+        startIndex + displayedNannies.length,
+        startIndex + displayedNannies.length + 3
+      ),
+    ];
+    setDisplayedNannies(newDisplayedNannies);
+  };
+
+  const hasMoreNannies =
+    sortedNannies.length > startIndex + displayedNannies.length;
 
   return (
     <ListSection>
       <StyledList>
-        {sortedNannies.map((nanny) => (
+        {displayedNannies.map((nanny) => (
           <CardNanny key={nanny.id} nanny={nanny} />
         ))}
       </StyledList>
-      {!allNanniesLoaded && (
+
+      {hasMoreNannies && (
         <Button
           title="Load More"
           border={false}
           padding="14px 40px"
-          onClick={loadMoreData}
+          onClick={handleLoadMore}
         />
       )}
+      <ScrollToTopButton />
     </ListSection>
   );
 };
