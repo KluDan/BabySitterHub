@@ -1,8 +1,17 @@
-import { Navigate } from "react-router-dom";
-import useAuth from "../utils/hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const ProtectedRoute = ({ children }) => {
+import { useAuth } from "./AuthProvider.jsx";
+
+export default function ProtectedRoute({ children }) {
   const { isAuth } = useAuth();
+  const navigate = useNavigate();
 
-  return isAuth ? children : <Navigate to="/BabySitterHub" />;
-};
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/BabySitterHub", { replace: true });
+    }
+  }, [isAuth, navigate]);
+
+  return isAuth ? children : null;
+}

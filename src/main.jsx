@@ -21,6 +21,9 @@ import { Favorites } from "./pages/Favorites";
 
 import { Catalog } from "./pages/Catalog";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+import AuthProvider from "./components/AuthProvider";
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -33,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/BabySitterHub/favorites",
-        element: <Favorites />,
+        element: (
+          <ProtectedRoute>
+            <Favorites />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -44,9 +51,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Suspense fallback={<>loading</>}>
+        <AuthProvider>
           <RouterProvider router={router} />
-        </Suspense>
+        </AuthProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
