@@ -1,4 +1,10 @@
-import { StyledInput } from "../FormInput/FormInput.styled";
+import { styled } from "styled-components";
+import { InputError, StyledInput } from "../FormInput/FormInput.styled";
+
+const Div = styled.div`
+  grid-column: ${({ $isGridStretchRow }) =>
+    $isGridStretchRow ? "span 2" : "span 1"};
+`;
 
 const PopUpInput = ({
   name,
@@ -7,16 +13,21 @@ const PopUpInput = ({
   value,
   onChange,
   isGridStretchRow,
+  formik,
 }) => {
   return (
-    <StyledInput
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      $isGridStretchRow={isGridStretchRow}
-    />
+    <Div $isGridStretchRow={isGridStretchRow}>
+      <StyledInput
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      {formik.touched[name] && formik.errors[name] && (
+        <InputError>{formik.errors[name]}</InputError>
+      )}
+    </Div>
   );
 };
 

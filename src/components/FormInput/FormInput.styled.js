@@ -40,3 +40,8 @@ export const StyledHideShowButton = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
+
+export const InputError = styled.div`
+  margin-top: 4px;
+  color: red;
+`;

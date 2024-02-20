@@ -55,3 +55,10 @@ export const CloseBtn = styled(CloseIcon)`
   }
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 `;
+
+export const StyledError = styled.p`
+  font-size: 20px;
+  margin-top: 10px;
+  color: red;
+  text-align: center;
+`;

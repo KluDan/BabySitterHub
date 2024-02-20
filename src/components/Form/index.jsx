@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
+import { validationSchema } from "../../utils/schemes/authSchema";
 
 import FormInput from "../FormInput";
+import LoaderWithBackdrop from "../LoaderSpinner";
 
 import {
   StyledForm,
@@ -9,9 +11,18 @@ import {
   StyledTitle,
   StyledInputBlock,
   CloseBtn,
+  StyledError,
 } from "./Form.styled";
 
-export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
+export const Form = ({
+  title,
+  handleClick,
+  text,
+  isRegistration,
+  onClose,
+  errorMessage,
+  loading,
+}) => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,8 +35,11 @@ export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
         formik.values.password,
         formik.values.name
       ),
+    validationSchema: validationSchema,
   });
-
+  if (loading) {
+    return <LoaderWithBackdrop />;
+  }
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
       <CloseBtn onClick={onClose} />
@@ -38,6 +52,7 @@ export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
             type="text"
             handleChange={formik.handleChange}
             value={formik.values.name}
+            formik={formik}
           />
         )}
 
@@ -46,17 +61,21 @@ export const Form = ({ title, handleClick, text, isRegistration, onClose }) => {
           type="email"
           handleChange={formik.handleChange}
           value={formik.values.email}
+          formik={formik}
         />
+
         <FormInput
           name="password"
           type="password"
           handleChange={formik.handleChange}
           value={formik.values.password}
+          formik={formik}
         />
       </StyledInputBlock>
       <StyledFormBtn type="submit">
         {isRegistration ? "Sign Up" : "Log In"}
       </StyledFormBtn>
+      {errorMessage && <StyledError>{errorMessage}</StyledError>}
     </StyledForm>
   );
 };
