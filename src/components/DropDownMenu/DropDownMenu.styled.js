@@ -4,6 +4,13 @@ export const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
   margin-bottom: 32px;
+  label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    color: ${(p) => p.theme.colors.titleText};
+    cursor: pointer;
+  }
 `;
 
 export const DropdownButton = styled.button`
@@ -20,6 +27,7 @@ export const DropdownButton = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 8px;
 `;
 
 export const DropdownList = styled.ul`

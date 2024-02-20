@@ -35,7 +35,8 @@ const CustomDropdown = ({ onSelect }) => {
 
   return (
     <DropdownContainer>
-      <DropdownButton onClick={handleToggle}>
+      <label htmlFor="filters">Filters</label>
+      <DropdownButton onClick={handleToggle} id="filters">
         {selectedOption.label || "Select an option"}
         <Vector
           style={{ transform: isRotated ? "rotate(180deg)" : "rotate(0)" }}
