@@ -1,25 +1,52 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { styled } from "styled-components";
-import CardNanny from "../components/CardNanny";
 import CustomDropdown from "../components/DropDownMenu";
-import { StyledList } from "../components/ListOfNannyCards/ListOfNannyCards.styled";
+import NannyList from "../components/ListOfNannyCards";
 import { getUserFavorites } from "../firebase";
 import { selectUsers } from "../store/slices/userSlice";
+import { Link } from "react-router-dom";
+import LoaderWithBackdrop from "../components/LoaderSpinner";
+const FavoritesSection = styled.section`
+  max-width: 1184px;
+  margin: 64px auto;
+`;
+
+const EmptyListMessage = styled.div`
+  font-size: 34px;
+  width: 1000px;
+  height: 500px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+`;
+const StyledLink = styled(Link)`
+  color: ${(p) => p.theme.colors.titleText};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 export const Favorites = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const { currentUser } = useSelector(selectUsers);
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (currentUser) {
+          setLoading(true);
           const userFavorites = await getUserFavorites(currentUser.id);
           setFavorites(userFavorites);
           console.log("favorites", userFavorites);
         }
       } catch (error) {
         console.error("Error fetching favorites", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -30,20 +57,27 @@ export const Favorites = () => {
     console.log("Selected option:", option);
     setSelectedOption(option);
   };
-
-  const FavoritesSection = styled.section`
-    max-width: 1184px;
-    margin: 64px auto;
-  `;
+  if (loading) {
+    return <LoaderWithBackdrop />;
+  }
+  if (favorites.length === 0) {
+    return (
+      <FavoritesSection>
+        <EmptyListMessage>
+          <p>
+            Your list of favorite nannies is empty. Please go to the{" "}
+            <StyledLink to="/BabySitterHub/nannies">Catalog</StyledLink> and
+            choose a suitable nanny for your child.
+          </p>
+        </EmptyListMessage>
+      </FavoritesSection>
+    );
+  }
 
   return (
     <FavoritesSection>
       <CustomDropdown onSelect={handleSelectOption} />
-      <StyledList>
-        {favorites?.map((nanny) => (
-          <CardNanny key={nanny.id} nanny={nanny} />
-        ))}
-      </StyledList>
+      <NannyList sortBy={selectedOption} nannies={favorites} />
     </FavoritesSection>
   );
 };

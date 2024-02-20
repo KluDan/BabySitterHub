@@ -14,9 +14,13 @@ const Container = styled.div`
   width: 100%;
   margin: 0 auto;
 `;
+
+const Main = styled.main`
+  width: 100%;
+  margin: 0 auto;
+`;
 const Layout = () => {
   const dispatch = useDispatch();
-  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -27,10 +31,8 @@ const Layout = () => {
           id: user.uid,
         };
         dispatch(setUser(userData));
-        setIsFetching(false);
       } else {
         dispatch(setUser(null));
-        setIsFetching(false);
       }
     });
 
@@ -40,10 +42,10 @@ const Layout = () => {
   return (
     <ModalProvider>
       <Container>
-        <Header isFetching={isFetching} />
-        <main>
+        <Header />
+        <Main>
           <Outlet />
-        </main>
+        </Main>
       </Container>
     </ModalProvider>
   );
