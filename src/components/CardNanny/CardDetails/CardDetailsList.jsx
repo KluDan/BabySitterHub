@@ -1,5 +1,5 @@
 import { calculateAge } from "../../../utils/helpers/calculateAge";
-import DetailsItem from "../../CardDetailsItem";
+import DetailsItem from "./CardDetailsItem";
 import { DetailsList } from "../CardNanny.styled";
 
 const CardDetailsList = ({

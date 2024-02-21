@@ -17,6 +17,7 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: #fff;
   border-radius: 10px;
+  margin-inline: 20px;
 `;
 
 const Modal = ({ onClose, children }) => {

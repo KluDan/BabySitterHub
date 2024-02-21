@@ -4,12 +4,16 @@ export const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
   margin-bottom: 32px;
+  z-index: 1;
   label {
     font-weight: 500;
     font-size: 14px;
     line-height: 129%;
     color: ${(p) => p.theme.colors.titleText};
     cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
   }
 `;
 
@@ -28,6 +32,12 @@ export const DropdownButton = styled.button`
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+    width: 100%;
+    min-width: 150px;
+    gap: 20px;
+  }
 `;
 
 export const DropdownList = styled.ul`
@@ -43,6 +53,9 @@ export const DropdownList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  @media (max-width: 768px) {
+    gap: 8px;
+  }
 `;
 
 export const DropdownListItem = styled.li`
@@ -58,4 +71,7 @@ export const DropdownListItem = styled.li`
     `
     color: ${p.theme.colors.primaryBodyText};
   `}
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;

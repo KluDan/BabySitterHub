@@ -3,6 +3,15 @@ import StarIcon from "../../assets/icons/star.svg?react";
 
 const Review = styled.article`
   max-width: 433px;
+  @media (max-width: 1024px) {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    gap: 40px;
+  }
+  @media (max-width: 480px) {
+    gap: 20px;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -10,6 +19,11 @@ const UserInfo = styled.div`
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
+  min-width: 120px;
+  @media (max-width: 1024px) {
+    margin-bottom: 0;
+    min-width: 100px;
+  }
 `;
 
 const UserAvatar = styled.div`
@@ -24,6 +38,11 @@ const UserAvatar = styled.div`
   font-size: 20px;
   line-height: 100%;
   color: ${(p) => p.theme.colors.primaryGreenColor};
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
   img {
     width: 20px;
     height: 20px;
@@ -42,6 +61,10 @@ const Name = styled.p`
   font-size: 16px;
   line-height: 125%;
   color: ${(p) => p.theme.colors.primaryBodyText};
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const Rate = styled.span`
@@ -58,6 +81,9 @@ const ReviewText = styled.p`
   font-size: 16px;
   line-height: 125%;
   color: ${(p) => p.theme.colors.secondaryBodyText};
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const ReviewItem = ({ review }) => {

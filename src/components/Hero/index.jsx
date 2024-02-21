@@ -17,7 +17,7 @@ const Hero = () => {
   return (
     <StyledHeroMain>
       <InfoBlock>
-        <HeroTitle>Make Life Easier for the Family:</HeroTitle>
+        <HeroTitle>Make Life Easier for the Family</HeroTitle>
         <HeroText>Find Babysitters Online for All Occasions</HeroText>
         <HeroBtn as={Link} to="/BabySitterHub/nannies">
           Get started

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const PopUp = styled.div`
   border-radius: 30px;
-  width: 600px;
+  max-width: 600px;
   max-height: 700px;
   background-color: ${(p) => p.theme.colors.headerText};
   position: relative;
@@ -11,6 +11,15 @@ export const PopUp = styled.div`
   flex-direction: column;
   gap: 30px;
   overflow-y: auto;
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+  @media (max-height: 768px) {
+    max-height: 600px;
+  }
+  @media (max-height: 540px) {
+    max-height: 400px;
+  }
 `;
 
 export const TextBlock = styled.div`
@@ -22,12 +31,20 @@ export const TextBlock = styled.div`
     letter-spacing: -0.02em;
     color: ${(p) => p.theme.colors.primaryBodyText};
     margin-bottom: 20px;
+    @media (max-height: 768px) {
+      font-size: 30px;
+      line-height: normal;
+    }
   }
   p {
     font-weight: 400;
     font-size: 16px;
     line-height: 125%;
     color: ${(p) => p.theme.colors.secondaryBodyText};
+    @media (max-height: 768px) {
+      font-size: 14px;
+      line-height: normal;
+    }
   }
 `;
 

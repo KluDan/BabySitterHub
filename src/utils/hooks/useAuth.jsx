@@ -8,6 +8,7 @@ function useAuth() {
     currentUser,
     name: currentUser?.name,
     isAuth: !!currentUser?.email,
+    email: currentUser.email,
   };
 }
 

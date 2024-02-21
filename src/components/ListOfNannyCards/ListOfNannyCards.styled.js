@@ -13,4 +13,8 @@ export const StyledList = styled.ul`
   flex-direction: column;
   gap: 32px;
   margin-bottom: 64px;
+  @media (max-width: 1024px) {
+    gap: 24px;
+    margin-bottom: 40px;
+  }
 `;

@@ -4,7 +4,7 @@ export const StyledButton = styled.button`
   font-weight: 500;
   line-height: 125%;
   letter-spacing: -0.01em;
-  color: #fbfbfb;
+  color: ${(p) => p.theme.colors.headerText};
   padding: ${({ $padding }) => ($padding ? $padding : "14px 40px")};
   border-radius: 30px;
   border: ${({ $border }) =>
@@ -14,5 +14,8 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: rgba(16, 57, 49, 0.2);
     color: black;
+  }
+  @media (max-width: 1200px) {
+    padding: 10px 20px;
   }
 `;

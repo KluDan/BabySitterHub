@@ -27,6 +27,10 @@ export const StyledInput = styled.input`
   }
   grid-column: ${({ $isGridStretchRow }) =>
     $isGridStretchRow ? "span 2" : "span 1"};
+  @media (max-width: 768px) {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
 `;
 
 export const StyledHideShowButton = styled.div`

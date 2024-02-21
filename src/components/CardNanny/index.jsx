@@ -2,7 +2,6 @@ import {
   ArticleNanny,
   ButtonsBlock,
   Description,
-  DetailsList,
   ImageContainer,
   InfoBasic,
   InfoContainer,
@@ -20,7 +19,6 @@ import {
 
 import StarIcon from "../../assets/icons/star.svg?react";
 import MapPinIcon from "../../assets/icons/map-pin.svg?react";
-import DetailsItem from "../CardDetailsItem";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import { useEffect, useState } from "react";
 import Button from "../Button";
@@ -28,7 +26,6 @@ import { useModal } from "../../utils/helpers/ModalContext";
 import PopUpAppointment from "../PopUpAppointment";
 import Modal from "../Modal";
 
-import { calculateAge } from "../../utils/helpers/calculateAge";
 import {
   getUserFavorites,
   removeFavoriteById,
@@ -37,13 +34,19 @@ import {
 import useAuth from "../../utils/hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/slices/userSlice";
+import HeartForm from "../Forms/ModalAfterHeartClick";
+import LoaderWithBackdrop from "../LoaderSpinner";
+import CardDetailsList from "./CardDetails/CardDetailsList";
+import { useMediaQuery } from "react-responsive";
 
 const CardNanny = ({ nanny }) => {
   const { currentUser, isAuth } = useAuth();
   const [showReviews, setShowReviews] = useState(false);
   const { modalConfig, openModal, closeModal } = useModal();
   const [clickedHeart, setClickedHeart] = useState(null);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const {
     about,
@@ -61,24 +64,6 @@ const CardNanny = ({ nanny }) => {
     reviews,
   } = nanny;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser && nanny) {
-        try {
-          const favorites = await getUserFavorites(currentUser.id);
-          const isNannyInFavorites = favorites.some(
-            (favNanny) => favNanny.id === nanny.id
-          );
-          setClickedHeart(isNannyInFavorites);
-        } catch (error) {
-          console.error("Error fetching favorites", error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [currentUser, nanny]);
-
   const formattedCharacters = characters
     .map((character) => character.charAt(0).toUpperCase() + character.slice(1))
     .join(", ");
@@ -86,6 +71,24 @@ const CardNanny = ({ nanny }) => {
   const handleOpenModal = () => {
     openModal("appointment", nanny);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (currentUser && nanny) {
+          const favorites = await getUserFavorites(currentUser.id);
+          const isNannyInFavorites = favorites.some(
+            (favNanny) => favNanny.id === nanny.id
+          );
+          setClickedHeart(isNannyInFavorites);
+        }
+      } catch (error) {
+        console.error("Error fetching favorites", error);
+      }
+    };
+
+    fetchData();
+  }, [currentUser, nanny]);
 
   const addToFavorites = async () => {
     if (isAuth) {
@@ -97,9 +100,8 @@ const CardNanny = ({ nanny }) => {
 
         if (isNannyInFavorites) {
           setClickedHeart(false);
-
+          setLoading(true);
           if (nanny.id) {
-            console.log("removed");
             await removeFavoriteById(currentUser.id, nanny.id);
             const updatedFavorites = currentUser?.favorites.filter(
               (favorite) => favorite.id !== nanny.id
@@ -118,20 +120,33 @@ const CardNanny = ({ nanny }) => {
         }
       } catch (error) {
         console.error("Error adding to favorites:", error);
+      } finally {
+        setLoading(false);
       }
     } else {
-      openModal("login");
+      openModal("favorites");
     }
   };
 
+  if (loading) {
+    return <LoaderWithBackdrop />;
+  }
+
   return (
     <ArticleNanny>
-      <ImageContainer>
-        <img src={avatar_url} alt="Portrait of the babysitter" />
-      </ImageContainer>
+      {!isMobile && (
+        <ImageContainer>
+          <img src={avatar_url} alt="Portrait of the babysitter" />
+        </ImageContainer>
+      )}
       <InfoContainer $fullInfo={showReviews}>
         <MainInfo>
           <InfoBasic>
+            {isMobile && (
+              <ImageContainer>
+                <img src={avatar_url} alt="Portrait of the babysitter" />
+              </ImageContainer>
+            )}
             <Title>
               <span>Nanny</span>
               <h2>{name}</h2>
@@ -157,23 +172,24 @@ const CardNanny = ({ nanny }) => {
               />
             </InfoOverview>
           </InfoBasic>
-
-          <DetailsList>
-            <DetailsItem label="Age:" value={calculateAge(birthday)} />
-            <DetailsItem label="Experience:" value={experience} />
-            <DetailsItem label="Kids age:" value={kids_age} />
-            <DetailsItem label="Characters:" value={formattedCharacters} />
-            <DetailsItem label="Education:" value={education} />
-          </DetailsList>
-
-          <Description>{about}</Description>
+          <CardDetailsList
+            birthday={birthday}
+            experience={experience}
+            kids_age={kids_age}
+            formattedCharacters={formattedCharacters}
+            education={education}
+          />
+          {!isMobile && <Description>{about}</Description>}
         </MainInfo>
         {showReviews && (
-          <ReviewList>
-            {reviews.map((review, index) => (
-              <ReviewItem key={index} review={review} />
-            ))}
-          </ReviewList>
+          <>
+            {isMobile && <Description>{about}</Description>}
+            <ReviewList>
+              {reviews.map((review, index) => (
+                <ReviewItem key={index} review={review} />
+              ))}
+            </ReviewList>
+          </>
         )}
         <ButtonsBlock>
           {showReviews && (
@@ -195,6 +211,11 @@ const CardNanny = ({ nanny }) => {
             onClose={closeModal}
             nanny={modalConfig.selectedNanny}
           />
+        </Modal>
+      )}
+      {modalConfig.isOpen && modalConfig.formType === "favorites" && (
+        <Modal onClose={closeModal}>
+          <HeartForm onClose={closeModal} />
         </Modal>
       )}
     </ArticleNanny>

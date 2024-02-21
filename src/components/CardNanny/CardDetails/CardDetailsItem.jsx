@@ -18,6 +18,17 @@ const StyledItem = styled.li`
     text-decoration-skip-ink: none;
     color: ${(p) => p.theme.colors.primaryBodyText};
   }
+  @media (max-width: 1024px) {
+    padding: 8px 10px;
+    line-height: normal;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (max-width: 480px) {
+    padding: 4px;
+    font-size: 12px;
+  }
 `;
 
 const DetailsItem = ({ label, value }) => (

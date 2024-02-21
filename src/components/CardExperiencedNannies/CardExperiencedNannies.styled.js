@@ -10,6 +10,24 @@ export const InfoCard = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  @media (max-width: 1200px) {
+    padding: 24px;
+    bottom: 40px;
+    right: 40px;
+  }
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 100px;
+    top: 300px;
+    left: 15px;
+  }
+  @media (max-width: 640px) {
+    top: 380px;
+    left: 20px;
+  }
+  @media (max-width: 480px) {
+    top: 400px;
+  }
 `;
 export const CardIcon = styled.div`
   border-radius: 13px;

@@ -22,12 +22,22 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 1024px) {
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const StyledVector = styled(Vector)`
   width: 24px;
   height: 24px;
   transform: rotate(180deg);
+  @media (max-width: 768px) {
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 const ScrollToTopButton = () => {
