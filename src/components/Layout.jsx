@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
 import { setUser } from "../store/slices/userSlice";
@@ -21,9 +21,11 @@ const Main = styled.main`
 `;
 const Layout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      navigate("/BabySitterHub/");
       if (user) {
         const userData = {
           name: user.displayName,

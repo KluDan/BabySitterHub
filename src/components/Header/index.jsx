@@ -16,10 +16,11 @@ import BurgerMenu from "./BurgerMenu";
 const Header = () => {
   const location = useLocation();
   const { pathname } = location;
+  console.log("pathname", pathname);
   const { isAuth } = useAuth();
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const shouldApplyStyles = pathname === "/BabySitterHub";
+  const shouldApplyStyles = pathname === "/BabySitterHub/";
 
   return (
     <HeaderStyled $main={shouldApplyStyles}>
@@ -32,7 +33,7 @@ const Header = () => {
         ) : (
           <HeaderNavAuthBlock $main={shouldApplyStyles}>
             <StyledNavigation>
-              <StyledLink to="/BabySitterHub" end>
+              <StyledLink to="/BabySitterHub/" end>
                 Home
               </StyledLink>
               <StyledLink to="/BabySitterHub/nannies">Nannies</StyledLink>

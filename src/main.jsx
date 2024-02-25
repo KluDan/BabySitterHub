@@ -1,11 +1,6 @@
 import ReactDOM from "react-dom/client";
-import React, { Suspense } from "react";
-import {
-  createBrowserRouter,
-  Navigate,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
@@ -29,7 +24,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/BabySitterHub", element: <HomePage /> },
+      { path: "/BabySitterHub/", element: <HomePage /> },
       {
         path: "/BabySitterHub/nannies",
         element: <Catalog />,
