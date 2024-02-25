@@ -25,13 +25,13 @@ const Layout = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      navigate("/BabySitterHub/");
       if (user) {
         const userData = {
           name: user.displayName,
           email: user.email,
           id: user.uid,
         };
+        console.log(user);
         dispatch(setUser(userData));
       } else {
         dispatch(setUser(null));

@@ -66,7 +66,7 @@ const AuthUserBlock = ({ main }) => {
           dispatch(setUser(null));
           handleCloseConfirmLogout();
           localStorage.removeItem("userToken");
-          navigate("/BabySitterHub", { replace: true });
+          navigate("/BabySitterHub/", { replace: true });
         })
         .catch((error) => console.log(error));
     }

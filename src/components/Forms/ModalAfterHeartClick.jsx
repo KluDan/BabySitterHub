@@ -42,7 +42,7 @@ const HeartForm = ({ onClose }) => {
             token: user.accessToken,
           })
         );
-        localStorage.setItem("userId", user.uid);
+        localStorage.setItem("userToken", user.accessToken);
         onClose();
       })
       .catch((error) => {

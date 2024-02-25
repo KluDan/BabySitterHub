@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <HeaderStyled $main={shouldApplyStyles}>
       <HeaderNavBlock $main={shouldApplyStyles}>
-        <HeaderLogo to="/BabySitterHub" $main={shouldApplyStyles}>
+        <HeaderLogo to="/BabySitterHub/" $main={shouldApplyStyles}>
           Nanny.Services
         </HeaderLogo>
         {isMobile ? (

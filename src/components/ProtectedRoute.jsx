@@ -9,6 +9,7 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!isAuth) {
+      console.log(isAuth);
       navigate("/BabySitterHub/", { replace: true });
     }
   }, [isAuth, navigate]);
