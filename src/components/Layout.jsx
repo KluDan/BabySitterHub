@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
 import { setUser } from "../store/slices/userSlice";
@@ -21,7 +21,6 @@ const Main = styled.main`
 `;
 const Layout = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

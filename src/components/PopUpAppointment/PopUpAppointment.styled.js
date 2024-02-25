@@ -3,16 +3,20 @@ import { styled } from "styled-components";
 export const PopUp = styled.div`
   border-radius: 30px;
   max-width: 600px;
-  max-height: 700px;
+  max-height: 760px;
   background-color: ${(p) => p.theme.colors.headerText};
   position: relative;
-  padding: 34px;
+  padding: 40px 64px;
   display: flex;
   flex-direction: column;
   gap: 30px;
   overflow-y: auto;
+  @media (max-width: 1024px) {
+    padding: 40px;
+  }
   @media (max-width: 768px) {
     gap: 20px;
+    padding: 30px;
   }
   @media (max-height: 768px) {
     max-height: 600px;
@@ -31,7 +35,7 @@ export const TextBlock = styled.div`
     letter-spacing: -0.02em;
     color: ${(p) => p.theme.colors.primaryBodyText};
     margin-bottom: 20px;
-    @media (max-height: 768px) {
+    @media (max-width: 768px) {
       font-size: 30px;
       line-height: normal;
     }
@@ -41,7 +45,7 @@ export const TextBlock = styled.div`
     font-size: 16px;
     line-height: 125%;
     color: ${(p) => p.theme.colors.secondaryBodyText};
-    @media (max-height: 768px) {
+    @media (max-width: 768px) {
       font-size: 14px;
       line-height: normal;
     }

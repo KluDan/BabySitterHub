@@ -65,7 +65,6 @@ export const HeroTitle = styled.h1`
   letter-spacing: -0.03em;
   margin-bottom: 28px;
   @media (max-width: 768px) {
-    /*  position: absolute; */
     max-width: 600px;
     font-size: clamp(30px, 8vw, 50px);
   }
