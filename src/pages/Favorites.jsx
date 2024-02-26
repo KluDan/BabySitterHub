@@ -52,7 +52,6 @@ export const Favorites = () => {
           setLoading(true);
           const userFavorites = await getUserFavorites(currentUser.id);
           setFavorites(userFavorites);
-          console.log("favorites", userFavorites);
         }
       } catch (error) {
         console.error("Error fetching favorites", error);
@@ -65,7 +64,6 @@ export const Favorites = () => {
   }, [currentUser]);
 
   const handleSelectOption = (option) => {
-    console.log("Selected option:", option);
     setSelectedOption(option);
   };
   if (loading) {

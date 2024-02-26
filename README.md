@@ -61,13 +61,13 @@ _Appointment form for booking nannies_
 3. **Create a Firebase configuration file `.env` and add your settings:**
 
    ```bash
-   VITE_API_KEY= AIzaSyCWYjmkk34JmxhoKR59l_T-aK5C44aY72I
-   VITE_AUTH_DOMAIN = babysitters-57e3c.firebaseapp.com
-   VITE_DATABASE_URL = https://babysitters-57e3c-default-rtdb.firebaseio.com
-   VITE_PROJECT_ID= babysitters-57e3c
-   VITE_STORAGE_BUCKET = babysitters-57e3c.appspot.com
-   VITE_MESSAGING_SENDER_ID=107090147671
-   VITE_APP_ID= 1:107090147671:web:d1ad6872e16611aa746612
+   VITE_API_KEY=YOUR_API_KEY
+   VITE_AUTH_DOMAIN=YOUR_AUTH_DOMAIN
+   VITE_DATABASE_URL=YOUR_DATABASE_URL
+   VITE_PROJECT_ID=YOUR_PROJECT_ID
+   VITE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
+   VITE_MESSAGING_SENDER_ID=YOUR_MESSAGING_SENDER_ID
+   VITE_APP_ID=YOUR_APP_ID
    ```
 
 4. **Run the application:**

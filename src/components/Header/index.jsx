@@ -16,7 +16,6 @@ import BurgerMenu from "./BurgerMenu";
 const Header = () => {
   const location = useLocation();
   const { pathname } = location;
-  console.log("pathname", pathname);
   const { isAuth } = useAuth();
   const isMobile = useMediaQuery({ maxWidth: 768 });
 

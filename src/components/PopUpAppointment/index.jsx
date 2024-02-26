@@ -27,18 +27,7 @@ const PopUpAppointment = ({ onClose, nanny }) => {
     email,
     parent_name,
     comment
-  ) => {
-    console.log(
-      "Form values:",
-      address,
-      phone,
-      child_age,
-      time,
-      email,
-      parent_name,
-      comment
-    );
-  };
+  ) => {};
 
   const formik = useFormik({
     initialValues: {
@@ -51,7 +40,6 @@ const PopUpAppointment = ({ onClose, nanny }) => {
       comment: "",
     },
     onSubmit: () => {
-      console.log("Form submitted");
       handleClick(
         formik.values.address,
         formik.values.phone,

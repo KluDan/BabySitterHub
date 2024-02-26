@@ -31,7 +31,6 @@ const StyledLink = styled(Link)`
 
 const ErrorPage = () => {
   const error = useRouteError();
-  console.log(error);
   return (
     <Wrapper>
       <h1>Oooops...</h1>

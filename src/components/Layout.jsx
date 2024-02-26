@@ -30,7 +30,6 @@ const Layout = () => {
           email: user.email,
           id: user.uid,
         };
-        console.log(user);
         dispatch(setUser(userData));
       } else {
         dispatch(setUser(null));
